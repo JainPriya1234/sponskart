@@ -41,7 +41,6 @@ app.options("*", cors);
 
 app.use(router);
 app.get('/', ()=>{
-    res.json(1);
     console.log(1);
 })
 app.listen(3000,()=>{
