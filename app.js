@@ -40,7 +40,10 @@ app.use(cors(corsOptions));
 app.options("*", cors);
 
 app.use(router);
-
+app.get('/', ()=>{
+    res.json(1);
+    console.log(1);
+})
 app.listen(3000,()=>{
     console.log("App is running at http://localhost:%d ",3000);
 });

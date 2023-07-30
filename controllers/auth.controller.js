@@ -1,14 +1,15 @@
 const User = require('../models/user');
-const join = async (req,res,next)=>{
+const Register = async (req,res,next)=>{
     try{
         const { firstname , lastname ,username , phonenumber , email, password } = req.body;
+        console.log(req.body);
         const exist = await User.findOne({
             email: email
         });
         if (exist) {
             return res.json("already exist..please login");
         }
-        await User.create({
+        await  User.create({
             firstname: firstname,
             lastname: lastname,
             username:username,
@@ -45,5 +46,5 @@ const signin = async (req,res,next)=>{
 
 module.exports = {
     signin, 
-    join
+    Register
 }
