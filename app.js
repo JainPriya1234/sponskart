@@ -22,6 +22,14 @@ const app = express();
 app.use(cors({
     origin: "*",
 }))
+
+
+// Express configuration
+app.use(express.json());
+
+
+app.use(express.urlencoded({ extended: true, limit: "5mb" }));
+
 //app.options("*", cors);
 
 // ADD THIS IS YOUR CONNECTION FILE
@@ -37,9 +45,7 @@ const connectDB = mongoose.connect(process.env.MONGO_URI,{
     console.log("DB Connection Failed!")
     process.exit(1)
 });
-// Express configuration
-app.use(express.json());
-app.use(express.urlencoded({ extended: true, limit: "5mb" }));
+
 
 app.use(router);
 app.get('/', ()=>{
