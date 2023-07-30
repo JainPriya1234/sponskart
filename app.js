@@ -36,7 +36,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 
 // CORS configuration
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+}}));
 app.options("*", cors);
 
 app.use(router);
