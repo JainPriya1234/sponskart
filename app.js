@@ -7,7 +7,6 @@ const router = require("./routes/auth.routes");
 const corsOptions = {
     origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    // allowedHeaders: ["Content-Type", "Accept"],
     preflightContinue: false,
     optionsSuccessStatus: 204,
 };
@@ -18,17 +17,10 @@ dotenv.config();
 // Create Express server
 const app = express();
 
-app.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
 // CORS configuration
-app.use(cors({
-    origin: "*",
-}))
+// CORS configuration
+app.use(cors(corsOptions));
+app.options("*", cors);
 
 
 // Express configuration
