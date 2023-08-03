@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const express = require("express");
 const mongoose = require('mongoose');
 const router = require("./routes/auth.routes");
+const notFound = require('./error handler/notfound');
+const errorHandlerMiddleware = require('./middleware/errorhandler');
 
 const corsOptions = {
     origin: "*",
@@ -47,6 +49,12 @@ const connectDB = mongoose.connect(process.env.MONGO_URI,{
 
 
 app.use(router);
+
+
+// Error handling
+app.use(notFound);
+app.use(errorHandlerMiddleware)
+
 app.get('/', (req,res)=>{
     console.log(1);
     res.json("2323");

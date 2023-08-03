@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const bcrypt =  require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
     firstname:{
@@ -36,6 +37,15 @@ const userSchema = new mongoose.Schema({
             "Minimum eight characters, at least one letter and one number is Required"
         ],
         required: [true, "Please provide password"],
+    }
+},
+{
+    methods:{
+        generateJWT(){
+            return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
+                expiresIn: process.env.JWT_EXPIRATION,
+            });
+        }
     }
 });
 userSchema.methods.comparePassword = async function (candidatePassword) {
