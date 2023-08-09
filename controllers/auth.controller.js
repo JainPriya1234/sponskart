@@ -19,7 +19,7 @@ const Register = async (req,res,next)=>{
         if (exist) {
             return res.json("already exist..please login");
         }
-        await  User.create({
+       const newuser =  await  User.create({
             firstname: firstname,
             lastname: lastname,
             username:username,
@@ -28,6 +28,7 @@ const Register = async (req,res,next)=>{
             password: password,
             location: location
         })
+        console.log(newuser);
         res.json("successfully signed up!");
     }
     catch(err){
