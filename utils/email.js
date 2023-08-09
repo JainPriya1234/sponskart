@@ -13,14 +13,12 @@ exports.sendEmail = (email,resetlink) =>{
     console.log("mail sent");
     transporter.sendMail({
         to: email,
-        from:'priya.jain11302@gmail.com',
+        from:'noreplysponskart0@gmail.com',
         subject:`Reset link (valid for 15 minutes)`,
         html:`<!DOCTYPE html>
         <html>
         <body>
-           <button type="submit" onClick=${resetlink}>
-             Resetlink
-           </button>
+           ${resetlink}
         </body>
         </html>`   
     })

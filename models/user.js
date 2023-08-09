@@ -9,15 +9,16 @@ const userSchema = new mongoose.Schema({
     },
     lastname:{
         type: String,
-        required: [true, "Please provide first name"],
+        required: [true, "Please provide last name"],
     },
     username:{
         type: String,
-        required: [true, "Please provide first name"],
+        unique: [true, "Please provide unique name , this usernam already exist ! "],
+        required: [true, "Please provide username"],
     },
     phonenumber:{
         type: Number,
-        required: [true, "Please provide first name"],
+        required: [true, "Please provide phonenumber"],
     },
     email: {
         type: String,
@@ -37,6 +38,10 @@ const userSchema = new mongoose.Schema({
             "Minimum eight characters, at least one letter and one number is Required"
         ],
         required: [true, "Please provide password"],
+    },
+    location: {
+        type: String,
+        required: [true, "Please provide location"],
     }
 },
 {

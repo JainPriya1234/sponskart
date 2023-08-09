@@ -11,7 +11,7 @@ const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
 const Register = async (req,res,next)=>{
     try{
-        const { firstname , lastname ,username , phonenumber , email, password } = req.body;
+        const { firstname , lastname ,username , phonenumber , email, password ,location} = req.body;
         console.log(req.body);
         const exist = await User.findOne({
             email: email
@@ -25,7 +25,8 @@ const Register = async (req,res,next)=>{
             username:username,
             phonenumber:phonenumber,
             email: email,
-            password: password
+            password: password,
+            location: location
         })
         res.json("successfully signed up!");
     }
@@ -39,14 +40,14 @@ const signin = async (req,res,next)=>{
         const emailExists = await User.findOne({email:email});
         if (!emailExists) {
             const message = "Email Not Exist";
-            res.json(message);
+            return res.json(message);
+            
         }   
         const isPasswordRight = await emailExists.comparePassword(password);
         if (!isPasswordRight) {
             const message = "Invalid credentials";
-            res.json(message);
+            return res.json(message);
         }
-       console.log(req.body);
         res.json("successfully signedin! ");
     }
     catch(err){
@@ -77,8 +78,11 @@ const forgot =async(req,res,next)=>{
 const verifyResetPassword =async(req,res,next)=>{
    try{
     const token = req.query.token;
+    console.log(token);
     const payload = await jwt.verify(token,process.env.JWT_SECRET);
+    console.log(payload);
     const userExist = await user.findOne({_id : payload.userId})
+    console.log(userExist);
     if (!userExist)
     {
         const message = `Invalid Token `;
