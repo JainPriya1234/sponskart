@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
     },
     location: {
         type: String,
-        required: [true, "Please provide location"],
+        required: [true, "Please provide a location"],
     }
 },
 {
