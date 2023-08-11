@@ -1,14 +1,55 @@
 const user = require('../models/user');
 const User = require('../models/user');
-const nodemailer = require('nodemailer');
-const otp = require('../models/otp')
 const {createCustomError} = require('../error handler/customApiError');
+const { sendSuccessApiResponse } = require('../middleware/successApiResponse');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const api_key = process.env.API_KEY ;
 const otpGenerator = require('otp-generator');
 const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
+
+function generateJWT(user){
+    return jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRATION,
+    });
+}
+const refreshToken= async (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer")) {
+        const message = "Unauthenticaded No Bearer";
+        return next(createCustomError(message, 401));
+    }
+
+    let data;
+    const token = authHeader.split(" ")[1];
+    try {
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        data = await getNewToken(payload);
+    } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            const payload = jwt.decode(token, { complete: true }).payload;
+            data = await getNewToken(payload);
+
+            if (!data) {
+                const message = "Authentication failed invalid JWT";
+                return next(createCustomError(message, 401));
+            }
+        } else {
+            const message = "Authentication failed invalid JWT";
+            return next(createCustomError(message, 401));
+        }
+    }
+
+    res.status(200).json(sendSuccessApiResponse(data, 200));
+};
+
+generateJWT = function (user) {
+    return jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRATION,
+    });
+};
+
 const Register = async (req,res,next)=>{
     try{
         const { firstname , lastname ,username , phonenumber , email, password ,location} = req.body;
@@ -41,17 +82,22 @@ const signin = async (req,res,next)=>{
         const { email, password } = req.body;
         const emailExists = await User.findOne({email:email});
         if (!emailExists) {
-            const message = "Email Not Exist";
-            return res.json(message);
-            
+            const message = "User Not Found";
+            return next(createCustomError(message, 404));
         }   
         const isPasswordRight = await emailExists.comparePassword(password);
         if (!isPasswordRight) {
             const message = "Invalid credentials";
-            return res.json(message);
+            return next(createCustomError(message, 401));
         }
-        res.json("successfully signedin! ");
-    }
+        const data = {
+            Name: emailExists.Name,
+            email: emailExists.email,
+            token: generateJWT(emailExists),
+            role:emailExists.role
+        };
+        res.status(200).json(sendSuccessApiResponse(data));
+      }
     catch(err){
         res.json(err);
     }

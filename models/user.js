@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const bcrypt =  require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { ObjectId } = require("mongodb");
 
 const userSchema = new mongoose.Schema({
     firstname:{
@@ -42,6 +43,10 @@ const userSchema = new mongoose.Schema({
     location: {
         type: String,
         required: [true, "Please provide a location"],
+    },
+    brand : {
+        type:mongoose.Types.ObjectId,
+        ref:"brand"
     }
 },
 {

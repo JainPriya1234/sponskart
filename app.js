@@ -43,7 +43,7 @@ const connectDB = mongoose.connect(process.env.MONGO_URI,{
 })
 .then(console.log("DB Connected Succesfully...."))
 .catch((err)=>{
-    console.log("DB Connection Failed!")
+    console.log(err,"DB Connection Failed!")
     process.exit(1)
 });
 
