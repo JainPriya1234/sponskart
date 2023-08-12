@@ -57,7 +57,7 @@ const Register = async (req,res,next)=>{
         const exist = await User.findOne({
             email: email
         });
-        console.log(exist);
+       
         if (exist) {
             return res.json("already exist..please login");
         }
