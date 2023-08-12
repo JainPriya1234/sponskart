@@ -44,16 +44,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a location"],
     },
-    isVerified: {
-        type:Boolean,
-        default:false
-    },isActive: {
-        type: Boolean,
-        default: true,
-    },
     brand : {
         type:mongoose.Types.ObjectId,
         ref:"brand"
+    },
+    contentcreator : {
+        type:mongoose.Types.ObjectId,
+        ref:"contentCreator"
+    },
+    type:{
+         type:String,
+         enum: ["user","brand","contentCreator"],
+         default: "user"
     }
 },
 {

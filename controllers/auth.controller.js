@@ -8,17 +8,19 @@ const otpGenerator = require('otp-generator');
 const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
+const contentCreator = require('../models/contentCreator');
 
 const Register = async (req,res,next)=>{
     try{
-        const { firstname , lastname ,username , phonenumber , email, password ,location} = req.body;
+        const { firstname , lastname ,username , phonenumber , email, password ,location,type,organizationName} = req.body;
         console.log(req.body);
         const exist = await User.findOne({
             email: email
         });
         console.log(exist);
         if (exist) {
-            return res.json("already exist..please login");
+            const message = "Email is already registered";
+            return next(createCustomError(message, 400));
         }
         await  User.create({
             firstname: firstname,
@@ -29,6 +31,13 @@ const Register = async (req,res,next)=>{
             password: password,
             location: location
         })
+        if(type=="contentCreator"){
+            const newContentCreator = await contentCreator.create({
+                organizationName: organizationName
+            })
+            await User.findOneAndUpdate({email:email},{type:"contentCreator",contentcreator:newContentCreator._id})
+            return res.json(sendSuccessApiResponse("contentCreator sucessfully registered",200))
+        }
         res.json(sendSuccessApiResponse("sucessfully registered",200));
     }
     catch(err){
@@ -50,7 +59,8 @@ const signin = async (req,res,next)=>{
             return next(createCustomError(message, 401));
         }
         const data = {
-            email: emailExists.email
+            email: emailExists.email,
+            token: emailExists.generateJWT()
         };
         res.status(200).json(sendSuccessApiResponse(data));
       }
