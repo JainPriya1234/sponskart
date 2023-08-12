@@ -96,7 +96,7 @@ const signin = async (req,res,next)=>{
             token: generateJWT(emailExists),
             role:emailExists.role
         };
-        res.status(200).json(sendSuccessApiResponse(data));
+        res.status(200).json("successfully logged in ! ");
       }
     catch(err){
         res.json(err);
