@@ -89,13 +89,7 @@ const signin = async (req,res,next)=>{
             const message = "Invalid credentials";
             return next(createCustomError(message, 401));
         }
-        const data = {
-            Name: emailExists.Name,
-            email: emailExists.email,
-            token: generateJWT(emailExists),
-            role:emailExists.role
-        };
-        res.status(200).json(sendSuccessApiResponse(data));
+        res.json(sendSuccessApiResponse("successfully logged in",200));
       }
     catch(err){
         return createCustomError(err,400);
