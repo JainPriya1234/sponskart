@@ -6,24 +6,19 @@ const { ObjectId } = require("mongodb");
 const userSchema = new mongoose.Schema({
     firstname:{
         type: String,
-        required: [true, "Please provide first name"],
     },
     lastname:{
         type: String,
-        required: [true, "Please provide last name"],
     },
     username:{
         type: String,
         unique: [true, "Please provide unique name , this usernam already exist ! "],
-        required: [true, "Please provide username"],
     },
     phonenumber:{
         type: Number,
-        required: [true, "Please provide phonenumber"],
     },
     email: {
         type: String,
-        required: [true, "Please provide email"],
         unique:[true,"Email already Exist, please Login"],
         match: [
             /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/,
