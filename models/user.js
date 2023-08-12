@@ -33,11 +33,9 @@ const userSchema = new mongoose.Schema({
             /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
             "Minimum eight characters, at least one letter and one number is Required"
         ],
-        required: [true, "Please provide password"],
     },
     location: {
         type: String,
-        required: [true, "Please provide a location"],
     },
     brand : {
         type:mongoose.Types.ObjectId,
