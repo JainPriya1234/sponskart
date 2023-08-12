@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema({
     },
     username:{
         type: String,
-        unique: [true, "Please provide unique name , this usernam already exist ! "],
     },
     phonenumber:{
         type: Number,
@@ -41,13 +40,13 @@ const userSchema = new mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref:"brand"
     },
-    contentcreator : {
+    organizer : {
         type:mongoose.Types.ObjectId,
-        ref:"contentCreator"
+        ref:"Organizer"
     },
     type:{
          type:String,
-         enum: ["user","brand","contentCreator"],
+         enum: ["user","brand","Organizer"],
          default: "user"
     }
 },

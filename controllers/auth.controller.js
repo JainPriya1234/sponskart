@@ -8,7 +8,7 @@ const otpGenerator = require('otp-generator');
 const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
-const contentCreator = require('../models/contentCreator');
+const Organizer = require('../models/Organizer');
 
 const Register = async (req,res,next)=>{
     try{
@@ -22,6 +22,13 @@ const Register = async (req,res,next)=>{
             const message = "Email is already registered";
             return next(createCustomError(message, 400));
         }
+        const usernameExist = await User.findOne({
+            username: username
+        }) ;
+        if(usernameExist){
+            const message = "username is already registered";
+            return next(createCustomError(message, 400));
+        }
         await  User.create({
             firstname: firstname,
             lastname: lastname,
@@ -31,12 +38,12 @@ const Register = async (req,res,next)=>{
             password: password,
             location: location
         })
-        if(type=="contentCreator"){
-            const newContentCreator = await contentCreator.create({
+        if(type=="Organizer"){
+            const neworganizer = await Organizer.create({
                 organizationName: organizationName
             })
-            await User.findOneAndUpdate({email:email},{type:"contentCreator",contentcreator:newContentCreator._id})
-            return res.json(sendSuccessApiResponse("contentCreator sucessfully registered",200))
+            await User.findOneAndUpdate({email:email},{type:"Organizer",organizer:neworganizer._id})
+            return res.json(sendSuccessApiResponse("Organizer sucessfully registered",200))
         }
         res.json(sendSuccessApiResponse("sucessfully registered",200));
     }
