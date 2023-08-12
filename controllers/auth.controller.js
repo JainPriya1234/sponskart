@@ -70,7 +70,7 @@ const Register = async (req,res,next)=>{
             password: password,
             location: location
         })
-        
+        console.log(newuser);
         res.json("successfully signed up!");
     }
     catch(err){
