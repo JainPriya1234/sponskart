@@ -57,7 +57,7 @@ const Register = async (req,res,next)=>{
         const exist = await User.findOne({
             email: email
         });
-       
+        console.log(exist);
         if (exist) {
             return res.json("already exist..please login");
         }
@@ -70,7 +70,7 @@ const Register = async (req,res,next)=>{
             password: password,
             location: location
         })
-        console.log(newuser);
+        
         res.json("successfully signed up!");
     }
     catch(err){
