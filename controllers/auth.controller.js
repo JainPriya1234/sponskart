@@ -9,47 +9,6 @@ const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
 
-function generateJWT(user){
-    return jwt.sign({ userId: user._id}, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRATION,
-    });
-}
-const refreshToken= async (req, res, next) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith("Bearer")) {
-        const message = "Unauthenticaded No Bearer";
-        return next(createCustomError(message, 401));
-    }
-
-    let data;
-    const token = authHeader.split(" ")[1];
-    try {
-        const payload = jwt.verify(token, process.env.JWT_SECRET);
-        data = await getNewToken(payload);
-    } catch (error) {
-        if (error instanceof jwt.TokenExpiredError) {
-            const payload = jwt.decode(token, { complete: true }).payload;
-            data = await getNewToken(payload);
-
-            if (!data) {
-                const message = "Authentication failed invalid JWT";
-                return next(createCustomError(message, 401));
-            }
-        } else {
-            const message = "Authentication failed invalid JWT";
-            return next(createCustomError(message, 401));
-        }
-    }
-
-    res.status(200).json(sendSuccessApiResponse(data, 200));
-};
-
-generateJWT = function (user) {
-    return jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRATION,
-    });
-};
-
 const Register = async (req,res,next)=>{
     try{
         const { firstname , lastname ,username , phonenumber , email, password ,location} = req.body;
@@ -61,7 +20,7 @@ const Register = async (req,res,next)=>{
         if (exist) {
             return res.json("already exist..please login");
         }
-       const newuser =  await  User.create({
+        await  User.create({
             firstname: firstname,
             lastname: lastname,
             username:username,
@@ -70,10 +29,11 @@ const Register = async (req,res,next)=>{
             password: password,
             location: location
         })
-        res.json(sendSuccessApiResponse("successfully registered",200));
+        res.json(sendSuccessApiResponse("sucessfully registered",200));
     }
     catch(err){
-        res.json(err);
+        console.log(err);
+        res.json(next(createCustomError(err)));
     }
 }
 const signin = async (req,res,next)=>{
