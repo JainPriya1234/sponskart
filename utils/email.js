@@ -23,5 +23,18 @@ exports.sendEmail = (email,resetlink) =>{
         </html>`   
     })
 }
+exports.sendOtp =(email,OTPgen)=>{
+  transporter.sendMail({
+    to:email,
+    from:'noreplysponskart0@gmail.com',
+    subject:'your OTP for sponskart',
+    html:`<!DOCTYPE html>
+    <html>
+    <body>
+       ${OTPgen}
+    </body>
+    </html>` 
+  })
+}
 
  

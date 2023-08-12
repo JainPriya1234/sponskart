@@ -44,6 +44,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a location"],
     },
+    isVerified: {
+        type:Boolean,
+        default:false
+    },isActive: {
+        type: Boolean,
+        default: true,
+    },
     brand : {
         type:mongoose.Types.ObjectId,
         ref:"brand"
