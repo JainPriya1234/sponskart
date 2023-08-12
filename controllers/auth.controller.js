@@ -73,8 +73,8 @@ const Register = async (req,res,next)=>{
     //         location: location
     //     })
     //    res.json("success");
-    const { firstname , lastname ,username , phonenumber , email, password ,location} = req.body;
-    const toStore = {firstname , lastname ,username , phonenumber , email, password ,location};
+    
+    const toStore = {firstname , lastname ,username , phonenumber , email, password ,location}=req.body;
     console.log("register");
     const emailisActive = await User.findOne({ email, isActive: true , isVerified:true});
     if (emailisActive) {

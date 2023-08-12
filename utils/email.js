@@ -24,6 +24,7 @@ exports.sendEmail = (email,resetlink) =>{
     })
 }
 exports.sendOtp =(email,OTPgen)=>{
+  console.log("mail sent");
   transporter.sendMail({
     to:email,
     from:'noreplysponskart0@gmail.com',
