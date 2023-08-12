@@ -71,7 +71,7 @@ const Register = async (req,res,next)=>{
             password: password,
             location: location
         })
-       res.json(sendSuccessApiResponse("successfully created" , 200));
+       res.json("success");
     }
     catch(err){
         res.json(err);
