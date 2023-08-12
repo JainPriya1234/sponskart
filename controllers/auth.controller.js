@@ -85,6 +85,7 @@ const Register = async (req,res,next)=>{
         digits:true, lowerCaseAlphabets : false, upperCaseAlphabets:false,
         specialChars:false
     })
+    console.log(OTPgen);
     const OTP = await Otp.updateOne({email:email},{email:email , otp:OTPgen},{upsert:true});
     Email.sendOtp(email,OTPgen);
     const notVerifiedUser = await User.find({email:email});
