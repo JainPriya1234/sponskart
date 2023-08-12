@@ -90,8 +90,7 @@ const signin = async (req,res,next)=>{
             return next(createCustomError(message, 401));
         }
         const data = {
-            email: emailExists.email,
-            token: generateJWT(emailExists)
+            email: emailExists.email
         };
         res.status(200).json(sendSuccessApiResponse(data));
       }
