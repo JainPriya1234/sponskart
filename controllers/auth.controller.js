@@ -59,7 +59,8 @@ const Register = async (req,res,next)=>{
         });
         console.log(exist);
         if (exist) {
-            return res.json("already exist..please login");
+            const message ="already exist..please login";
+            return next(createCustomError(message, 406));
         }
        const newuser =  await  User.create({
             firstname: firstname,
@@ -71,7 +72,9 @@ const Register = async (req,res,next)=>{
             location: location
         })
         console.log(newuser);
-        res.json("successfully signed up!");
+        const response = sendSuccessApiResponse(newuser)
+        console.log(response)
+        res.json(response);
     }
     catch(err){
         res.json(err);
