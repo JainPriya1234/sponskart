@@ -1,4 +1,4 @@
-const sendSuccessApiResponse = (meassage, statusCode = 200) => {
+const sendSuccessApiResponse = (message, statusCode = 200) => {
     const message  = "success";
     return {
         message:message,
