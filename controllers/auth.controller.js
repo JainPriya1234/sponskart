@@ -62,7 +62,7 @@ const Register = async (req,res,next)=>{
             const message ="already exist..please login";
             return next(createCustomError(message, 406));
         }
-       const newuser =  await  User.create({
+        await  User.create({
             firstname: firstname,
             lastname: lastname,
             username:username,
