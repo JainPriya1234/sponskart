@@ -10,7 +10,7 @@ const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
 
 function generateJWT(user){
-    return jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
+    return jwt.sign({ userId: user._id}, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRATION,
     });
 }
@@ -89,7 +89,11 @@ const signin = async (req,res,next)=>{
             const message = "Invalid credentials";
             return next(createCustomError(message, 401));
         }
-        res.json(sendSuccessApiResponse("successfully logged in",200));
+        const data = {
+            email: emailExists.email,
+            token: generateJWT(emailExists)
+        };
+        res.status(200).json(sendSuccessApiResponse(data));
       }
     catch(err){
         return createCustomError(err,400);
