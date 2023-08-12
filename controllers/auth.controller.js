@@ -97,7 +97,7 @@ const signin = async (req,res,next)=>{
             role:emailExists.role
         };
         const message = "successfully logged in ! ";
-        res.status(200).json(next(message,sendSuccessApiResponse(data)));
+        res.status(200).json(message);
       }
     catch(err){
         res.json(err);
