@@ -4,11 +4,10 @@ const {createCustomError} = require('../error handler/customApiError');
 const { sendSuccessApiResponse } = require('../middleware/successApiResponse');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const api_key = process.env.API_KEY ;
-const OTPgen = require('otp-generator');
+const otpGenerator = require('otp-generator');
 const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
-const Otp = require('../models/otp');
 
 function generateJWT(user){
     return jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
@@ -53,54 +52,25 @@ generateJWT = function (user) {
 
 const Register = async (req,res,next)=>{
     try{
-    //     const { firstname , lastname ,username , phonenumber , email, password ,location} = req.body;
-    //     console.log(req.body);
-    //     const exist = await User.findOne({
-    //         email: email
-    //     });
-    //     console.log(exist);
-    //     if (exist) {
-    //         const message ="already exist..please login";
-    //         return next(createCustomError(message, 406));
-    //     }
-    //     await  User.create({
-    //         firstname: firstname,
-    //         lastname: lastname,
-    //         username:username,
-    //         phonenumber:phonenumber,
-    //         email: email,
-    //         password: password,
-    //         location: location
-    //     })
-    //    res.json("success");
-    
-    const toStore = {firstname , lastname ,username , phonenumber , email, password ,location}=req.body;
-    console.log("register");
-    const emailisActive = await User.findOne({ email, isActive: true , isVerified:true});
-    if (emailisActive) {
-        const message = "Email is already registered";
-        return next(createCustomError(message, 406));
-    }
-    const OTPgen = otpGenrator.generate(4,{
-        digits:true, lowerCaseAlphabets : false, upperCaseAlphabets:false,
-        specialChars:false
-    })
-    console.log(OTPgen);
-    const OTP = await Otp.updateOne({email:email},{email:email , otp:OTPgen},{upsert:true});
-    Email.sendOtp(email,OTPgen);
-    const notVerifiedUser = await User.find({email:email});
-    console.log(notVerifiedUser);
-    if(notVerifiedUser.length){
-        console.log(notVerifiedUser);
-        res.json(sendSuccessApiResponse(notVerifiedUser,200));
-    }
-    else{
-        const user = await User.create(toStore);
-        console.log(user);
-        const response = sendSuccessApiResponse(user)
-        console.log(response)
-        res.json(response);
-    }
+        const { firstname , lastname ,username , phonenumber , email, password ,location} = req.body;
+        console.log(req.body);
+        const exist = await User.findOne({
+            email: email
+        });
+        console.log(exist);
+        if (exist) {
+            return res.json("already exist..please login");
+        }
+       const newuser =  await  User.create({
+            firstname: firstname,
+            lastname: lastname,
+            username:username,
+            phonenumber:phonenumber,
+            email: email,
+            password: password,
+            location: location
+        })
+        res.json(sendSuccessApiResponse("successfully registered",200));
     }
     catch(err){
         res.json(err);
