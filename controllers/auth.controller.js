@@ -55,12 +55,15 @@ const Register = async (req,res,next)=>{
 const signin = async (req,res,next)=>{
     try{
         const { email, password } = req.body;
+        console.log(req.body);
         const emailExists = await User.findOne({email:email});
+        console.log(emailExists);
         if (!emailExists) {
             const message = "User Not Found";
             return next(createCustomError(message, 404));
         }   
         const isPasswordRight = await emailExists.comparePassword(password);
+        console.log(isPasswordRight);
         if (!isPasswordRight) {
             const message = "Invalid credentials";
             return next(createCustomError(message, 401));
@@ -69,7 +72,8 @@ const signin = async (req,res,next)=>{
             email: emailExists.email,
             token: emailExists.generateJWT()
         };
-        res.status(200).json(sendSuccessApiResponse(data));
+        console.log(data);
+        res.json(sendSuccessApiResponse(data,200));
       }
     catch(err){
         return createCustomError(err,400);
