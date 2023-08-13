@@ -9,6 +9,13 @@ const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
 const Organizer = require('../models/Organizer');
+ 
+function generateJWT(user){
+    console.log(user);
+    return jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRATION,
+    });
+}
 
 const Register = async (req,res,next)=>{
     try{
@@ -57,7 +64,6 @@ const signin = async (req,res,next)=>{
         const { email, password } = req.body;
         console.log(req.body);
         const emailExists = await User.findOne({email:email});
-        console.log(emailExists);
         if (!emailExists) {
             const message = "User Not Found";
             return next(createCustomError(message, 404));
@@ -70,7 +76,7 @@ const signin = async (req,res,next)=>{
         }
         const data = {
             email: emailExists.email,
-            token: emailExists.generateJWT()
+            token: generateJWT(emailExists)
         };
         console.log(data);
         res.json(sendSuccessApiResponse(data,200));
