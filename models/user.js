@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema({
         generateJWT(){
             return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
                 expiresIn: process.env.JWT_EXPIRATION,
-            });
+            });         
         }
     }
 });
