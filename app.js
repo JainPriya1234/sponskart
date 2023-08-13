@@ -50,15 +50,15 @@ const connectDB = mongoose.connect(process.env.MONGO_URI,{
 
 app.use(router);
 
+app.get('/', (req,res)=>{
+    console.log(1);
+    res.json("2323");
+})
 
 // Error handling
 app.use(notFound);
 app.use(errorHandlerMiddleware)
 
-app.get('/', (req,res)=>{
-    console.log(1);
-    res.json("2323");
-})
 app.listen(3000,()=>{
     console.log("App is running at http://localhost:%d ",3000);
 });
