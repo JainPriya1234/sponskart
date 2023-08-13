@@ -9,17 +9,11 @@ const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
 const Organizer = require('../models/Organizer');
- 
-function generateJWT(user){
-    console.log(user);
-    return jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRATION,
-    });
-}
 
 const Register = async (req,res,next)=>{
     try{
-        const { firstname , lastname ,username , phonenumber , email, password ,location,type,organizationName} = req.body;
+        const { firstname , lastname ,username , phonenumber , email, password ,location,organizationName} = req.body;
+        const type = req.body.type || "user";
         console.log(req.body);
         const exist = await User.findOne({
             email: email
@@ -29,12 +23,14 @@ const Register = async (req,res,next)=>{
             const message = "Email is already registered";
             return next(createCustomError(message, 400));
         }
-        const usernameExist = await User.findOne({
-            username: username
-        }) ;
-        if(usernameExist){
-            const message = "username is already registered";
-            return next(createCustomError(message, 400));
+        if(type=="user"){
+            const usernameExist = await User.findOne({
+                username: username
+            }) ;
+            if(usernameExist){
+                const message = "username is already registered";
+                return next(createCustomError(message, 400));
+            }
         }
         await  User.create({
             firstname: firstname,
@@ -62,24 +58,23 @@ const Register = async (req,res,next)=>{
 const signin = async (req,res,next)=>{
     try{
         const { email, password } = req.body;
-        console.log(req.body);
         const emailExists = await User.findOne({email:email});
+        const userDetail = emailExists;
         if (!emailExists) {
             const message = "User Not Found";
             return next(createCustomError(message, 404));
         }   
         const isPasswordRight = await emailExists.comparePassword(password);
-        console.log(isPasswordRight);
         if (!isPasswordRight) {
             const message = "Invalid credentials";
             return next(createCustomError(message, 401));
         }
         const data = {
             email: emailExists.email,
-            token: generateJWT(emailExists)
+            token: emailExists.generateJWT(),
+            userDetail
         };
-        console.log(data);
-        res.json(sendSuccessApiResponse(data,200));
+        res.status(200).json(sendSuccessApiResponse(data));
       }
     catch(err){
         return createCustomError(err,400);
