@@ -60,6 +60,9 @@ const signin = async (req,res,next)=>{
         const { email, password } = req.body;
         const emailExists = await User.findOne({email:email});
         const userDetail = emailExists;
+        console.log(userDetail);
+        const organizationName = await Organizer.findOne({ _id: userDetail.organizer });
+        console.log(organizationName);
         if (!emailExists) {
             const message = "User Not Found";
             return next(createCustomError(message, 404));
@@ -72,7 +75,8 @@ const signin = async (req,res,next)=>{
         const data = {
             email: emailExists.email,
             token: emailExists.generateJWT(),
-            userDetail
+            userDetail,
+            organizationName
         };
         res.status(200).json(sendSuccessApiResponse(data));
       }
