@@ -58,11 +58,7 @@ const Register = async (req,res,next)=>{
 const signin = async (req,res,next)=>{
     try{
         const { email, password } = req.body;
-        const emailExists = await User.findOne({email:email});
-        const userDetail = emailExists;
-        console.log(userDetail);
-        const organizationName = await Organizer.findOne({ _id: userDetail.organizer });
-        console.log(organizationName);
+        const emailExists = await User.findOne({email:email}).populate("organizer","organizationName");
         if (!emailExists) {
             const message = "User Not Found";
             return next(createCustomError(message, 404));
@@ -73,10 +69,8 @@ const signin = async (req,res,next)=>{
             return next(createCustomError(message, 401));
         }
         const data = {
-            email: emailExists.email,
-            token: emailExists.generateJWT(),
-            userDetail,
-            organizationName
+            ...emailExists._doc,
+            token: emailExists.generateJWT()
         };
         res.status(200).json(sendSuccessApiResponse(data));
       }
