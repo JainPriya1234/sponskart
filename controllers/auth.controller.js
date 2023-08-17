@@ -9,6 +9,7 @@ const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
 const Organizer = require('../models/Organizer');
+const brand = require('../models/brand');
 
 const Register = async (req,res,next)=>{
     try{
@@ -122,10 +123,59 @@ const verifyResetPassword =async(req,res,next)=>{
    }
 }
 
+const getbrand = async(req,res,next)=>{
+    try{
+        console.log(1);
+        const brands=await brand.find({type: "brand"});
+      if (!brands) {
+        const message = "No brands to show";
+        return next(createCustomError(message, 403));
+        }
+        else{
+            res.json(sendSuccessApiResponse(brands, 200));
+        }
+      }
+    catch(err){
+        return createCustomError(err,400);
+    }
+}
+const eventorganizer = async(req,res,next)=>{
+    try{
+        const events=await User.find({type : "Organizer"}).populate("organizer","organizationName");
+      if (!events) {
+        const message = "No events to show";
+        return next(createCustomError(message, 403));
+        }
+        else{
+            res.json(sendSuccessApiResponse(events, 200));
+        }
+      }
+    catch(err){
+        return createCustomError(err,400);
+    }
+}
+const contentcreator = async(req,res,next)=>{
+    try{
+        const creators=await User.find({type: "user"});
+      if (!creators) {
+        const message = "No content Creator to show";
+        return next(createCustomError(message, 403));
+        }
+        else{
+            res.json(sendSuccessApiResponse(creators, 200));
+        }
+      }
+    catch(err){
+        return createCustomError(err,400);
+    }
+}
 
 module.exports = {
     signin, 
     Register,
     forgot,
-    verifyResetPassword
+    verifyResetPassword,
+    getbrand,
+    eventorganizer,
+    contentcreator
 }

@@ -7,4 +7,10 @@ router.post('/signin',controller.signin);
 router.post('/forgot',controller.forgot);
 router.post('/resetpassword',controller.verifyResetPassword);
 
+//search routes
+
+router.get('/brand',controller.getbrand);
+router.get('/eventOrganizer',controller.eventorganizer);
+router.get('/contentCreator',controller.contentcreator);
+
 module.exports = router;
