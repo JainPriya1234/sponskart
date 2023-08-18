@@ -2,7 +2,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require("express");
 const mongoose = require('mongoose');
-const router = require("./routes/auth.routes");
+const authrouter = require("./routes/auth.routes");
+const servicerouter = require("./routes/service.route");
 const notFound = require('./error handler/notfound');
 const errorHandlerMiddleware = require('./middleware/errorhandler');
 
@@ -48,7 +49,8 @@ const connectDB = mongoose.connect(process.env.MONGO_URI,{
 });
 
 
-app.use(router);
+app.use(authrouter);
+app.use(servicerouter);
 
 app.get('/', (req,res)=>{
     console.log(1);

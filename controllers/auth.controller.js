@@ -13,7 +13,8 @@ const brand = require('../models/brand');
 
 const Register = async (req,res,next)=>{
     try{
-        const { firstname , lastname ,username , phonenumber , email, password ,location,organizationName} = req.body;
+        const { firstname , lastname ,username , phonenumber , email, password ,location,organizationName,
+            Logo,brandName,brandShortDesc,brandLongDesc} = req.body;
         const type = req.body.type || "user";
         console.log(req.body);
         const exist = await User.findOne({
@@ -46,8 +47,18 @@ const Register = async (req,res,next)=>{
             const neworganizer = await Organizer.create({
                 organizationName: organizationName
             })
-            await User.findOneAndUpdate({email:email},{type:"Organizer",organizer:neworganizer._id})
+            await User.findOneAndUpdate({email:email},{type:"Organizer",organizer:neworganizer._id,firstname: organizationName})
             return res.json(sendSuccessApiResponse("Organizer sucessfully registered",200))
+        }
+        if(type=="brand"){
+            const  newBrand = await brand.create({
+                Logo: Logo,
+                brandName:brandName,
+                brandShortDesc: brandShortDesc,
+                brandLongDesc:brandLongDesc
+            })
+            await User.findOneAndUpdate({email:email},{type:"brand",brand:newBrand._id,firstname:brandName})
+            return res.json(sendSuccessApiResponse("Brand sucessfully registered",200))
         }
         res.json(sendSuccessApiResponse("sucessfully registered",200));
     }
@@ -123,59 +134,12 @@ const verifyResetPassword =async(req,res,next)=>{
    }
 }
 
-const getbrand = async(req,res,next)=>{
-    try{
-        console.log(1);
-        const brands=await brand.find({type: "brand"});
-      if (!brands) {
-        const message = "No brands to show";
-        return next(createCustomError(message, 403));
-        }
-        else{
-            res.json(sendSuccessApiResponse(brands, 200));
-        }
-      }
-    catch(err){
-        return createCustomError(err,400);
-    }
-}
-const eventorganizer = async(req,res,next)=>{
-    try{
-        const events=await User.find({type : "Organizer"}).populate("organizer","organizationName");
-      if (!events) {
-        const message = "No events to show";
-        return next(createCustomError(message, 403));
-        }
-        else{
-            res.json(sendSuccessApiResponse(events, 200));
-        }
-      }
-    catch(err){
-        return createCustomError(err,400);
-    }
-}
-const contentcreator = async(req,res,next)=>{
-    try{
-        const creators=await User.find({type: "user"});
-      if (!creators) {
-        const message = "No content Creator to show";
-        return next(createCustomError(message, 403));
-        }
-        else{
-            res.json(sendSuccessApiResponse(creators, 200));
-        }
-      }
-    catch(err){
-        return createCustomError(err,400);
-    }
-}
+
 
 module.exports = {
     signin, 
     Register,
     forgot,
-    verifyResetPassword,
-    getbrand,
-    eventorganizer,
-    contentcreator
+    verifyResetPassword
+    
 }
