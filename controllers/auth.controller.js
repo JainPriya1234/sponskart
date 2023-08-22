@@ -47,7 +47,7 @@ const Register = async (req,res,next)=>{
             const neworganizer = await Organizer.create({
                 organizationName: organizationName
             })
-            await User.findOneAndUpdate({email:email},{type:"Organizer",organizer:neworganizer._id,firstname: organizationName})
+            await User.findOneAndUpdate({email:email},{type:"Organizer",organizer:neworganizer._id})
             return res.json(sendSuccessApiResponse("Organizer sucessfully registered",200))
         }
         if(type=="brand"){
@@ -101,7 +101,7 @@ const forgot =async(req,res,next)=>{
         return next(createCustomError(message, 400));
     } 
     const resetToken = emailExists.generateJWT();
-    const resetURL = `${req.protocol}://${process.env.BASEURL}/resetpassword?token=${resetToken}`;
+    const resetURL = `${process.env.BASEURL}?token=${resetToken}`;
     const result = await Email.sendEmail(email,resetURL);
     console.log(result);
     res.status(200).json(`Reset link has been sent to ${email}`)
