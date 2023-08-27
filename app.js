@@ -1,6 +1,7 @@
 const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require("express");
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const authrouter = require("./routes/auth.routes");
 const servicerouter = require("./routes/service.route");
@@ -28,9 +29,8 @@ app.options("*", cors);
 
 // Express configuration
 app.use(express.json());
-
-
-app.use(express.urlencoded({ extended: true, limit: "5mb" }));
+app.use(bodyParser.json());
+// app.use(express.urlencoded({ extended: true }));
 
 //app.options("*", cors);
 

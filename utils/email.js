@@ -11,6 +11,7 @@ const transporter = nodemailer.createTransport(sendGridTransport({
 }))
 exports.sendEmail = (email,resetlink) =>{
     console.log("mail sent");
+    console.log(email);
     transporter.sendMail({
         to: email,
         from:'noreplysponskart0@gmail.com',
@@ -21,6 +22,25 @@ exports.sendEmail = (email,resetlink) =>{
            ${resetlink}
         </body>
         </html>`   
+    })
+}
+exports.contact = (email,data) =>{
+    console.log("mail sent");
+    console.log(email);
+    transporter.sendMail({
+        to: 'Hello@sponskart.in',
+        from:'noreplysponskart0@gmail.com',
+        subject:`Contact Us `,
+        html:`<!DOCTYPE html>
+        <html>
+        <body>
+          <p>User Name: ${data.name}</p> 
+          <p>User Email: ${data.email}</p> 
+          <p>User Number: ${data.number}</p> 
+          <p>Reason: ${data.reason}</p> 
+          <p>Message: ${data.message}</p> 
+        </body>
+        </html>`  
     })
 }
 exports.sendOtp =(email,OTPgen)=>{

@@ -7,15 +7,21 @@ const brandprofileschema = new mongoose.Schema({
     }],
     brandName:{
         type: String,
-        required: [true, "Please provide brand name"],
     },
     brandShortDesc:{
         type: String,
-        required: [true, "Please provide description"],
     },
     brandLongDesc:{
         type: String,
-        required: [true, "Please provide description"],
+    },
+    pageHolder:{
+        type: String,
+    },
+    Holdernumber:{
+        type: String,
+    },
+    holderEmail:{
+        type: String,
     }
 })
 

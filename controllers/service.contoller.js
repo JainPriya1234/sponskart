@@ -3,6 +3,8 @@ const { createCustomError } = require("../error handler/customApiError");
 const { sendSuccessApiResponse } = require("../middleware/successApiResponse");
 const APIFeatures = require("../utils/APIfeatures");
 const user = require("../models/user");
+const Email = require('../utils/email');
+
 
 const searchservice = async (req,res,next)=>{
    try{
@@ -19,6 +21,26 @@ const searchservice = async (req,res,next)=>{
    }
 }
 
+const contactUs =async(req,res,next)=>{
+  try{
+     const {name,email,number,reason,message}=req.body;
+     console.log(req.body);
+     const data = {
+        name: name,
+        number: number,
+        email:email,
+        reason:reason,
+        message:message
+     }
+     console.log(data);
+     const result = await Email.contact(email,data);
+  }
+  catch(err){
+   return createCustomError(err,400);
+  }
+}
+
 module.exports = {
-   searchservice
+   searchservice,
+   contactUs
 };

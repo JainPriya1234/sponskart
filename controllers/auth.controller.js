@@ -11,10 +11,25 @@ const jwt = require("jsonwebtoken");
 const Organizer = require('../models/Organizer');
 const brand = require('../models/brand');
 
+const brandRegister = async (req,res,next)=>{
+    try{
+        console.log(1);
+        const {Logo,brandName,brandShortDesc,brandLongDesc }=req.body;
+        console.log(req.body)
+        const  newBrand = await brand.create({
+            brandName:brandName,
+            brandShortDesc: brandShortDesc,
+            brandLongDesc:brandLongDesc
+        })
+        // await User.findOneAndUpdate({email:email},{type:"brand",brand:newBrand._id,firstname:brandName})
+        return res.json(sendSuccessApiResponse("Brand sucessfully registered",200))
+    }
+    catch(err) {return next(createCustomError(err,400));}
+}
 const Register = async (req,res,next)=>{
     try{
-        const { firstname , lastname ,username , phonenumber , email, password ,location,organizationName,
-            Logo,brandName,brandShortDesc,brandLongDesc} = req.body;
+        const {firstname , lastname ,username , phonenumber , email, password ,location,organizationName,
+        Logo,brandName,brandShortDesc,brandLongDesc} = req.body;
         const type = req.body.type || "user";
         console.log(req.body);
         const exist = await User.findOne({
@@ -25,7 +40,7 @@ const Register = async (req,res,next)=>{
             const message = "Email is already registered";
             return next(createCustomError(message, 400));
         }
-        if(type=="user"){
+    
             const usernameExist = await User.findOne({
                 username: username
             }) ;
@@ -33,7 +48,7 @@ const Register = async (req,res,next)=>{
                 const message = "username is already registered";
                 return next(createCustomError(message, 400));
             }
-        }
+        
         await  User.create({
             firstname: firstname,
             lastname: lastname,
@@ -50,16 +65,7 @@ const Register = async (req,res,next)=>{
             await User.findOneAndUpdate({email:email},{type:"Organizer",organizer:neworganizer._id})
             return res.json(sendSuccessApiResponse("Organizer sucessfully registered",200))
         }
-        if(type=="brand"){
-            const  newBrand = await brand.create({
-                Logo: Logo,
-                brandName:brandName,
-                brandShortDesc: brandShortDesc,
-                brandLongDesc:brandLongDesc
-            })
-            await User.findOneAndUpdate({email:email},{type:"brand",brand:newBrand._id,firstname:brandName})
-            return res.json(sendSuccessApiResponse("Brand sucessfully registered",200))
-        }
+        
         res.json(sendSuccessApiResponse("sucessfully registered",200));
     }
     catch(err){
@@ -140,6 +146,6 @@ module.exports = {
     signin, 
     Register,
     forgot,
-    verifyResetPassword
-    
+    verifyResetPassword,
+    brandRegister
 }
