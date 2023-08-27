@@ -4,6 +4,7 @@ const { sendSuccessApiResponse } = require("../middleware/successApiResponse");
 const APIFeatures = require("../utils/APIfeatures");
 const user = require("../models/user");
 const Email = require('../utils/email');
+const Organizer = require("../models/Organizer");
 
 
 const searchservice = async (req,res,next)=>{
@@ -24,7 +25,6 @@ const searchservice = async (req,res,next)=>{
 const contactUs =async(req,res,next)=>{
   try{
      const {name,email,number,reason,message}=req.body;
-     console.log(req.body);
      const data = {
         name: name,
         number: number,
@@ -32,8 +32,8 @@ const contactUs =async(req,res,next)=>{
         reason:reason,
         message:message
      }
-     console.log(data);
-     const result = await Email.contact(email,data);
+     await Email.contact(email,data);
+     res.json(sendSuccessApiResponse(data));
   }
   catch(err){
    return createCustomError(err,400);

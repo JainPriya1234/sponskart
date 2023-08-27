@@ -4,6 +4,9 @@ const organizerSchema = new mongoose.Schema({
    organizationName : {
     type: String,
     required: [true,"please provide name"]
+   },
+   followers:{
+      
    }
 })
 
