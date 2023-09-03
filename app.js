@@ -3,8 +3,11 @@ const dotenv = require('dotenv');
 const express = require("express");
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
+var multer = require('multer');
+var upload = multer();
 const authrouter = require("./routes/auth.routes");
 const servicerouter = require("./routes/service.route");
+const organizerrouter = require('./routes/organizer.routes')
 const notFound = require('./error handler/notfound');
 const errorHandlerMiddleware = require('./middleware/errorhandler');
 
@@ -26,10 +29,19 @@ const app = express();
 app.use(cors(corsOptions));
 app.options("*", cors);
 
+// for parsing application/json
+app.use(bodyParser.json()); 
 
+// for parsing application/xwww-
+app.use(bodyParser.urlencoded({ extended: true })); 
+//form-urlencoded
+
+// for parsing multipart/form-data
+
+app.use('/public',express.static('public'))
 // Express configuration
 app.use(express.json());
-app.use(bodyParser.json());
+
 // app.use(express.urlencoded({ extended: true }));
 
 //app.options("*", cors);
@@ -51,6 +63,7 @@ const connectDB = mongoose.connect(process.env.MONGO_URI,{
 
 app.use(authrouter);
 app.use(servicerouter);
+app.use("/organizer",organizerrouter);
 
 app.get('/', (req,res)=>{
     console.log(1);

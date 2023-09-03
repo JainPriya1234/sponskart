@@ -1,5 +1,5 @@
 const express = require("express");
-const servicecontroller = require("../controllers/service.contoller");
+const servicecontroller = require("../controllers/service.controller");
 const router = express.Router();
 
 //search routes
