@@ -9,7 +9,7 @@ const {authorization} = require('../middleware/authorization')
 // /creator
 
 
-router.get('/get/:id',creator.getById);
+router.get('/:id',creator.getById);
 router.get('/getall',creator.getAll);
 
 
