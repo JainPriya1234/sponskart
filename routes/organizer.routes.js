@@ -11,7 +11,7 @@ router.put('/update',fileupload.fields([
     {name:'backgroundImage'}
 ]),organizercontroller.addprofile);
 
-router.get('/get/:id',organizercontroller.getById);
+router.get('/:id',organizercontroller.getById);
 router.get('/getall',organizercontroller.getAll);
 
 
