@@ -11,7 +11,7 @@ const addprofile = async(req,res,next)=>{
     try{
         const {organizationName,followers, eventType, preferredGender,
             platform, language,state,city,country,phonenumber,tagline,personOfcontact,
-            personOfcontactPhoneNo,personOfcontactEmail  } = req.body;
+            personOfcontactPhoneNo,personOfcontactEmail,views } = req.body;
         const toAdd = {
             organizationName:organizationName,
             followers:followers,
@@ -26,6 +26,7 @@ const addprofile = async(req,res,next)=>{
             personOfcontact:personOfcontact,
             personOfcontactPhoneNo:personOfcontactPhoneNo,
             personOfcontactEmail:personOfcontactEmail,
+            views:views,
             logo:`public/${req.files.logo[0].filename}`,
             backgroundImage:`public/${req.files.backgroundImage[0].filename}`
         }
@@ -45,7 +46,7 @@ const addprofile = async(req,res,next)=>{
 const getAll = async(req,res,next)=>{
     try{
         const SearchString = ["organizationName"];
-        const query = new APIFeatures(Organizer.find(),req.query)
+        const query = new APIFeatures(Organizer.find({followers:{$lt:req.query.followers || 1000000}}),req.query)
         .filter()
         .search(SearchString)
         const data = await query.query;
@@ -56,7 +57,20 @@ const getAll = async(req,res,next)=>{
         return next(createCustomError(err,400));
     }
 }
+
+const getById = async(req,res,next)=>{
+    try{
+        const id = req.params.id;
+        const result = await Organizer.findById(id);
+        if(!result) return next(createCustomError(`No Organization found with Id : ${id}`,404));
+        res.json(sendSuccessApiResponse(result));
+    }
+    catch(err){
+        return next(createCustomError(err,400));
+    }
+}
 module.exports = {
     addprofile,
-    getAll
+    getAll,
+    getById,
 };

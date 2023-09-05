@@ -7,7 +7,8 @@ var multer = require('multer');
 var upload = multer();
 const authrouter = require("./routes/auth.routes");
 const servicerouter = require("./routes/service.route");
-const organizerrouter = require('./routes/organizer.routes')
+const organizerRoute = require('./routes/organizer.routes')
+const creatorRoute = require('./routes/creator.route')
 const notFound = require('./error handler/notfound');
 const errorHandlerMiddleware = require('./middleware/errorhandler');
 
@@ -63,7 +64,9 @@ const connectDB = mongoose.connect(process.env.MONGO_URI,{
 
 app.use(authrouter);
 app.use(servicerouter);
-app.use("/organizer",organizerrouter);
+app.use("/organizer",organizerRoute);
+app.use("/creator",creatorRoute);
+
 
 app.get('/', (req,res)=>{
     console.log(1);

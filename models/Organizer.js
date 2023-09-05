@@ -21,33 +21,40 @@ const organizerSchema = new mongoose.Schema({
    language:{
       type:String
    },
-   state:{
-      type:String
+   location:{
+      type: String
    },
-   city:{
-      type:String
-   },
-   country:{
-      type:String
-   },
-   tagline:{
-      type:String
-   },
-   personOfcontact:{
-      type:String
-   },
-   personOfcontactPhoneNo:{
-      type:Number
-   },
-   personOfcontactEmail:{
-      type:String
-   },
-   backgroundImage:{
-      type:String,
-   },
-   logo:{
-      type:String
-   }
+   // state:{
+   //    type:String
+   // },
+   // city:{
+   //    type:String
+   // },
+   // country:{
+   //    type:String
+   // },
+   // tagline:{
+   //    type:String
+   // },
+   // personOfcontact:{
+   //    type:String
+   // },
+   // personOfcontactPhoneNo:{
+   //    type:Number
+   // },
+   // personOfcontactEmail:{
+   //    type:String
+   // },
+   // views:{
+   //    type:Number,
+   //    default:0
+   // },
+   // backgroundImage:{
+   //    type:String,
+   // },
+   // logo:{
+   //    type:String
+   // }
 })
 
 module.exports = mongoose.model("Organizer",organizerSchema);

@@ -10,6 +10,7 @@ const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
 const Organizer = require('../models/Organizer');
 const brand = require('../models/brand');
+const creator = require('../models/creator');
 
 const brandRegister = async (req,res,next)=>{
     try{

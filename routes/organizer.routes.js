@@ -2,14 +2,18 @@ const express = require("express");
 const organizercontroller = require("../controllers/organizer.controller");
 const router = express.Router();
 const fileupload = require('../middleware/fileupload');
+const {authorization} = require('../middleware/authorization')
 // End Point
 // /organizer
 
-router.post('/profile/add',fileupload.fields([
+router.put('/update',fileupload.fields([
     {name:'logo'},
     {name:'backgroundImage'}
 ]),organizercontroller.addprofile);
-router.get('/getall',organizercontroller.getAll)
+
+router.get('/get/:id',organizercontroller.getById);
+router.get('/getall',organizercontroller.getAll);
+
 
 
 

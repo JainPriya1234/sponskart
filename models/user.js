@@ -40,13 +40,17 @@ const userSchema = new mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref:"brand"
     },
+    creator : {
+        type:mongoose.Types.ObjectId,
+        ref:"creator"
+    },
     organizer : {
         type:mongoose.Types.ObjectId,
         ref:"Organizer"
     },
     type:{
          type:String,
-         enum: ["user","brand","Organizer"],
+         enum: ["user","brand","organizer"],
          default: "user"
     }
 },
