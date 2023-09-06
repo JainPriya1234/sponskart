@@ -4,14 +4,15 @@ const jwt = require("jsonwebtoken");
 const { ObjectId } = require("mongodb");
 
 const userSchema = new mongoose.Schema({
-    firstname:{
-        type: String,
-    },
-    lastname:{
-        type: String,
-    },
+    // firstname:{
+    //     type: String,
+    // },
+    // lastname:{
+    //     type: String,
+    // },
     username:{
         type: String,
+        unique:[true,'Username Already Exist']
     },
     phonenumber:{
         type: Number,
@@ -33,9 +34,9 @@ const userSchema = new mongoose.Schema({
             "Minimum eight characters, at least one letter and one number is Required"
         ],
     },
-    location: {
-        type: String,
-    },
+    // location: {
+    //     type: String,
+    // },
     brand : {
         type:mongoose.Types.ObjectId,
         ref:"brand"
@@ -49,9 +50,9 @@ const userSchema = new mongoose.Schema({
         ref:"Organizer"
     },
     type:{
-         type:String,
-         enum: ["user","brand","organizer"],
-         default: "user"
+        type:String,
+        enum: ["creator","brand","organizer"],
+        default: "creator"
     }
 },
 {

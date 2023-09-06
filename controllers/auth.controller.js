@@ -1,4 +1,3 @@
-const user = require('../models/user');
 const User = require('../models/user');
 const {createCustomError} = require('../error handler/customApiError');
 const { sendSuccessApiResponse } = require('../middleware/successApiResponse');
@@ -9,15 +8,15 @@ const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
 const Organizer = require('../models/Organizer');
-const brand = require('../models/brand');
-const creator = require('../models/creator');
+const Brand = require('../models/brand');
+const Creator = require('../models/creator');
 
 const brandRegister = async (req,res,next)=>{
     try{
         console.log(1);
         const {Logo,brandName,brandShortDesc,brandLongDesc }=req.body;
         console.log(req.body)
-        const  newBrand = await brand.create({
+        const  newBrand = await Brand.create({
             brandName:brandName,
             brandShortDesc: brandShortDesc,
             brandLongDesc:brandLongDesc
@@ -31,8 +30,7 @@ const Register = async (req,res,next)=>{
     try{
         const {firstname , lastname ,username , phonenumber , email, password ,location,organizationName,
         Logo,brandName,brandShortDesc,brandLongDesc} = req.body;
-        const type = req.body.type || "user";
-        console.log(req.body);
+        const type = req.body.type || "creator";
         const exist = await User.findOne({
             email: email
         });
@@ -41,31 +39,39 @@ const Register = async (req,res,next)=>{
             const message = "Email is already registered";
             return next(createCustomError(message, 400));
         }
-    
-            const usernameExist = await User.findOne({
-                username: username
-            }) ;
-            if(usernameExist){
-                const message = "username is already registered";
-                return next(createCustomError(message, 400));
-            }
+        // const usernameExist = await User.findOne({
+        //     username: username
+        // }) ;
+        // if(usernameExist){
+        //     const message = "username is already registered";
+        //     return next(createCustomError(message, 400));
+        // }
         
-        await  User.create({
-            firstname: firstname,
-            lastname: lastname,
+        const user = await User.create({
             username:username,
             phonenumber:phonenumber,
             email: email,
-            password: password,
-            location: location
+            password: password
         })
-        if(type=="Organizer"){
-            const neworganizer = await Organizer.create({
-                organizationName: organizationName
+        if(type == 'creator'){
+            const creator = await Creator.create({
+                firstname:firstname,
+                lastname:lastname,
+                state:location
             })
-            await User.findOneAndUpdate({email:email},{type:"Organizer",organizer:neworganizer._id})
+            user.creator = creator._id;
+            await user.save();
+            return res.json(sendSuccessApiResponse('Creator Successfully Register',200));
+        }
+        if(type=="organizer"){
+            const organizer = await Organizer.create({
+                organizationName:organizationName
+            })
+            user.organizer = organizer._id;
+            await user.save();
             return res.json(sendSuccessApiResponse("Organizer sucessfully registered",200))
         }
+        // Brand Registration Logic goes Here !
         
         res.json(sendSuccessApiResponse("sucessfully registered",200));
     }

@@ -30,11 +30,7 @@ const addprofile = async(req,res,next)=>{
             logo:`public/${req.files.logo[0].filename}`,
             backgroundImage:`public/${req.files.backgroundImage[0].filename}`
         }
-        let result = await Organizer.findOne({organizationName:organizationName});
-        if(result){
-            await Organizer.findOneAndUpdate({organizationName:organizationName},toAdd); 
-        }
-        else await Organizer.create(toAdd);
+        await Organizer.findOneAndUpdate({organizationName:organizationName},toAdd); 
         const response = await Organizer.findOne({organizationName:organizationName});
         res.json(sendSuccessApiResponse(response));
     }

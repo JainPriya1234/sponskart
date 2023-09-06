@@ -1,9 +1,11 @@
 const mongoose = require("mongoose")
 const path = require("path");
 const creatorSchema = new mongoose.Schema({
-   username : {
-    type: String,
-    required: [true,"please provide name"]
+   firstname:{
+      type:String
+   },
+   lastname:{
+      type:String
    },
    followers:{
       type:Number,
@@ -21,9 +23,12 @@ const creatorSchema = new mongoose.Schema({
    language:{
       type:String
    },
-   location:{
+   state:{
       type:String
-   },
+   }
+   // location:{
+   //    type:String
+   // },
 //    tagline:{
 //       type:String
 //    },

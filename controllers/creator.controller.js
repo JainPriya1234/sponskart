@@ -7,7 +7,7 @@ const creator = require("../models/creator");
 const getById = async(req,res,next)=>{
     try{
         const id = req.params.id;
-        const result = await User.findById(id);
+        const result = await creator.findById(id);
         if(!result) return next(createCustomError(`No User found with Id : ${id}`,404));
         res.json(sendSuccessApiResponse(result));
     }
@@ -18,7 +18,8 @@ const getById = async(req,res,next)=>{
 
 const getAll = async(req,res,next)=>{
     try{
-        const SearchString = ["username"];
+        console.log(12)
+        const SearchString = ["firstname"];
         const query = new APIFeatures(creator.find({followers:{$lt:req.query.followers || 1000000}}),req.query)
         .filter()
         .search(SearchString)
