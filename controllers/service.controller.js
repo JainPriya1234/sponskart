@@ -4,7 +4,7 @@ const { sendSuccessApiResponse } = require("../middleware/successApiResponse");
 const APIFeatures = require("../utils/APIfeatures");
 const user = require("../models/user");
 const Email = require('../utils/email');
-const Organizer = require("../models/Organizer");
+const Organizer = require("../models/organizer");
 
 
 const searchservice = async (req,res,next)=>{

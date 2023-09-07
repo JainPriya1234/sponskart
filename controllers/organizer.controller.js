@@ -4,15 +4,16 @@ const { sendSuccessApiResponse } = require("../middleware/successApiResponse");
 const APIFeatures = require("../utils/APIfeatures");
 const user = require("../models/user");
 const Email = require('../utils/email');
-const Organizer = require("../models/Organizer");
+const Organizer = require("../models/organizer");
 
 
 const addprofile = async(req,res,next)=>{
     try{
-        const {organizationName,followers, eventType, preferredGender,
+        const {email,organizationName,followers, eventType, preferredGender,
             platform, language,state,city,country,phonenumber,tagline,personOfcontact,
             personOfcontactPhoneNo,personOfcontactEmail,views } = req.body;
         const toAdd = {
+            email:email,
             organizationName:organizationName,
             followers:followers,
             eventType:eventType,

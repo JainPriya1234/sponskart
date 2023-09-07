@@ -47,12 +47,11 @@ const userSchema = new mongoose.Schema({
     },
     organizer : {
         type:mongoose.Types.ObjectId,
-        ref:"Organizer"
+        ref:"organizer"
     },
     type:{
         type:String,
-        enum: ["creator","brand","organizer"],
-        default: "creator"
+        enum: ["creator","brand","organizer"]
     }
 },
 {

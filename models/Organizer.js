@@ -1,6 +1,9 @@
 const mongoose = require("mongoose")
 const path = require("path");
 const organizerSchema = new mongoose.Schema({
+   email:{
+      type:String
+   },
    organizationName : {
     type: String,
     required: [true,"please provide name"]
@@ -21,12 +24,9 @@ const organizerSchema = new mongoose.Schema({
    language:{
       type:String
    },
-   location:{
+   state:{
       type: String
    },
-   // state:{
-   //    type:String
-   // },
    // city:{
    //    type:String
    // },

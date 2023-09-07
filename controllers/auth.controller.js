@@ -7,7 +7,7 @@ const otpGenerator = require('otp-generator');
 const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
-const Organizer = require('../models/Organizer');
+const Organizer = require('../models/organizer');
 const Brand = require('../models/brand');
 const Creator = require('../models/creator');
 
@@ -31,10 +31,10 @@ const Register = async (req,res,next)=>{
         const {firstname , lastname ,username , phonenumber , email, password ,location,organizationName,
         Logo,brandName,brandShortDesc,brandLongDesc} = req.body;
         const type = req.body.type || "creator";
+        console.log(req.body);
         const exist = await User.findOne({
             email: email
         });
-        console.log(exist);
         if (exist) {
             const message = "Email is already registered";
             return next(createCustomError(message, 400));
@@ -51,10 +51,12 @@ const Register = async (req,res,next)=>{
             username:username,
             phonenumber:phonenumber,
             email: email,
-            password: password
+            password: password,
+            type:type
         })
         if(type == 'creator'){
             const creator = await Creator.create({
+                email:email,
                 firstname:firstname,
                 lastname:lastname,
                 state:location
@@ -63,8 +65,10 @@ const Register = async (req,res,next)=>{
             await user.save();
             return res.json(sendSuccessApiResponse('Creator Successfully Register',200));
         }
-        if(type=="organizer"){
+        if(type == "organizer"){
+            console.log(1);
             const organizer = await Organizer.create({
+                email:email,
                 organizationName:organizationName
             })
             user.organizer = organizer._id;
@@ -72,7 +76,7 @@ const Register = async (req,res,next)=>{
             return res.json(sendSuccessApiResponse("Organizer sucessfully registered",200))
         }
         // Brand Registration Logic goes Here !
-        
+
         res.json(sendSuccessApiResponse("sucessfully registered",200));
     }
     catch(err){

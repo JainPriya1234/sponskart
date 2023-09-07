@@ -1,6 +1,9 @@
 const mongoose = require("mongoose")
 const path = require("path");
 const creatorSchema = new mongoose.Schema({
+   email:{
+      type:String
+   },
    firstname:{
       type:String
    },

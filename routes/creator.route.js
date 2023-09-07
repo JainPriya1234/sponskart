@@ -8,7 +8,10 @@ const {authorization} = require('../middleware/authorization')
 // End Point
 // /creator
 
-
+router.put('/update',fileupload.fields([
+    {name:'logo'},
+    {name:'backgroundImage'}
+]),creator.addprofile);
 router.get('/get/:id',creator.getById);
 router.get('/getall',creator.getAll);
 
