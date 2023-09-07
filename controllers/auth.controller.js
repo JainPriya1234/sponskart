@@ -29,7 +29,7 @@ const brandRegister = async (req,res,next)=>{
 const Register = async (req,res,next)=>{
     try{
         const {firstname , lastname ,username , phonenumber , email, password ,location,organizationName,
-        Logo,brandName,brandShortDesc,brandLongDesc} = req.body;
+        Logo,brandName,HolderName,brandShortDesc,brandLongDesc} = req.body;
         const type = req.body.type || "creator";
         console.log(req.body);
         const exist = await User.findOne({
@@ -76,7 +76,17 @@ const Register = async (req,res,next)=>{
             return res.json(sendSuccessApiResponse("Organizer sucessfully registered",200))
         }
         // Brand Registration Logic goes Here !
-
+        if(type == "brand"){
+            console.log(1);
+            const brand = await Brand.create({
+                email:email,
+                brandName:brandName,
+                HolderName:HolderName
+            })
+            user.brand = brand._id;
+            await user.save();
+            return res.json(sendSuccessApiResponse("Brand sucessfully registered",200))
+        }
         res.json(sendSuccessApiResponse("sucessfully registered",200));
     }
     catch(err){

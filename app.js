@@ -9,6 +9,7 @@ const authrouter = require("./routes/auth.routes");
 const servicerouter = require("./routes/service.route");
 const organizerRoute = require('./routes/organizer.routes')
 const creatorRoute = require('./routes/creator.route')
+const brandRoute = require('./routes/brand.route');
 const notFound = require('./error handler/notfound');
 const errorHandlerMiddleware = require('./middleware/errorhandler');
 
@@ -66,7 +67,7 @@ app.use(authrouter);
 app.use(servicerouter);
 app.use("/organizer",organizerRoute);
 app.use("/creator",creatorRoute);
-
+app.use("/brand",brandRoute);
 
 app.get('/', (req,res)=>{
     console.log(1);

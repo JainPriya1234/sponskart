@@ -17,11 +17,8 @@ const brandprofileschema = new mongoose.Schema({
     pageHolder:{
         type: String,
     },
-    Holdernumber:{
-        type: String,
-    },
-    holderEmail:{
-        type: String,
+    HolderName : {
+        type:String
     }
 })
 
