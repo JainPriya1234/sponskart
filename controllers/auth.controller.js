@@ -87,7 +87,7 @@ const Register = async (req,res,next)=>{
 const signin = async (req,res,next)=>{
     try{
         const { email, password } = req.body;
-        const emailExists = await User.findOne({email:email}).populate("organizer","organizationName");
+        const emailExists = await User.findOne({email:email});
         if (!emailExists) {
             const message = "User Not Found";
             return next(createCustomError(message, 404));
@@ -97,11 +97,18 @@ const signin = async (req,res,next)=>{
             const message = "Invalid credentials";
             return next(createCustomError(message, 401));
         }
-        const data = {
-            ...emailExists._doc,
+        console.log(emailExists)
+        let data;
+        if(emailExists.type=="creator") data = await Creator.findOne({email:email});
+        if(emailExists.type =="organizer") data = await Organizer.findOne({email:email});
+        if(emailExists.type =="brand") data = await Organizer.findOne({email:email});
+        
+        const response = {
+            user:emailExists,
+            data : data,
             token: emailExists.generateJWT()
         };
-        res.status(200).json(sendSuccessApiResponse(data));
+        res.status(200).json(sendSuccessApiResponse(response));
       }
     catch(err){
         return createCustomError(err,400);
