@@ -3,7 +3,7 @@ const User = require('../models/user');
 const {createCustomError} = require('../error handler/customApiError');
 const { sendSuccessApiResponse } = require('../middleware/successApiResponse');
 const bcrypt = require('bcryptjs');
-const Organizer = require('../models/organizer');
+const Organizer = require('../models/Organizer');
 const brand = require('../models/brand');
 
 

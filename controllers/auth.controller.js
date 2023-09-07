@@ -7,7 +7,7 @@ const otpGenerator = require('otp-generator');
 const bcrypt = require('bcryptjs');
 const Email = require('../utils/email');
 const jwt = require("jsonwebtoken");
-const Organizer = require('../models/organizer');
+const Organizer = require('../models/Organizer');
 const Brand = require('../models/brand');
 const Creator = require('../models/creator');
 
