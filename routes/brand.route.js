@@ -1,5 +1,5 @@
 const express = require("express");
-const creator  = require("../controllers/creator.controller");
+const brand  = require("../controllers/brand.controller");
 const router = express.Router();
 const fileupload = require('../middleware/fileupload');
 const {authorization} = require('../middleware/authorization')
@@ -13,7 +13,7 @@ const {authorization} = require('../middleware/authorization')
 //     {name:'backgroundImage'}
 // ]),creator.addprofile);
 // router.get('/get/:id',creator.getById);
-// router.get('/getall',creator.getAll);
+ router.get('/getall',brand.getAll);
 
 
 

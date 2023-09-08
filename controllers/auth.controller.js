@@ -80,6 +80,7 @@ const Register = async (req,res,next)=>{
             console.log(1);
             const brand = await Brand.create({
                 email:email,
+                username:username,
                 brandName:brandName,
                 HolderName:HolderName
             })
@@ -111,7 +112,7 @@ const signin = async (req,res,next)=>{
         let data;
         if(emailExists.type=="creator") data = await Creator.findOne({email:email});
         if(emailExists.type =="organizer") data = await Organizer.findOne({email:email});
-        if(emailExists.type =="brand") data = await Organizer.findOne({email:email});
+        if(emailExists.type =="brand") data = await Brand.findOne({email:email});
         
         const response = {
             user:emailExists,

@@ -5,6 +5,9 @@ const brandprofileschema = new mongoose.Schema({
         type: String,
         default: path.join('logo','Allow in .jpg')
     }],
+    email: {
+       type:String
+    },
     brandName:{
         type: String,
     },
