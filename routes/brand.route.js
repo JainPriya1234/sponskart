@@ -12,7 +12,7 @@ const {authorization} = require('../middleware/authorization')
 //     {name:'logo'},
 //     {name:'backgroundImage'}
 // ]),creator.addprofile);
-// router.get('/get/:id',creator.getById);
+ router.get('/get/:id',brand.getById);
  router.get('/getall',brand.getAll);
 
 

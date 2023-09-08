@@ -20,6 +20,19 @@ const getAll = async(req,res,next)=>{
     }
 }
 
+const getById = async(req,res,next)=>{
+    try{
+        const id = req.params.id;
+        const result = await Brand.findById(id);
+        if(!result) return next(createCustomError(`No Brand found with Id : ${id}`,404));
+        res.json(sendSuccessApiResponse(result));
+    }
+    catch(err){
+        return next(createCustomError(err,400));
+    }
+}
+
 module.exports = {
-    getAll
+    getAll,
+    getById
 };
