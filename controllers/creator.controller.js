@@ -9,7 +9,7 @@ const  addprofile = async(req,res,next)=>{
         const {id,email,firstname,lastname,followers, creatorType, preferredGender,
             platform, language,state,city,country,phonenumber,tagline,personOfcontact,
             personOfcontactPhoneNo,personOfcontactEmail,views } = req.body;
-        const toAdd = {
+        let toAdd = {
             email:email,
             followers:followers,
             creatorType:creatorType,
