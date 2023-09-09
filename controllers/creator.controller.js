@@ -23,9 +23,23 @@ const  addprofile = async(req,res,next)=>{
             personOfcontact:personOfcontact,
             personOfcontactPhoneNo:personOfcontactPhoneNo,
             personOfcontactEmail:personOfcontactEmail,
-            views:views,
-            // logo:`public/${req.files.logo[0].filename}`,
-            // backgroundImage:`public/${req.files.backgroundImage[0].filename}`
+            views:views
+        }
+        if(req.files.logo){          // If Logo Is present 
+            toAdd = {
+                toAdd,
+                ...{
+                    logo:`public/${req.files.logo[0].filename}`
+                }
+            }
+        }
+        if(req.files.backgroundImage){                  // If Background image is Present
+            toAdd = {
+                toAdd,
+                ...{
+                    backgroundImage:`public/${req.files.backgroundImage[0].filename}`
+                }
+            }
         }
         await creator.findByIdAndUpdate(id,toAdd); 
         const result = await creator.findById(id);

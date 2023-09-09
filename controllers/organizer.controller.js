@@ -12,7 +12,7 @@ const addprofile = async(req,res,next)=>{
         const {email,organizationName,followers, eventType, preferredGender,
             platform, language,state,city,country,phonenumber,tagline,personOfcontact,
             personOfcontactPhoneNo,personOfcontactEmail,views } = req.body;
-        const toAdd = {
+        let toAdd = {
             email:email,
             organizationName:organizationName,
             followers:followers,
@@ -28,8 +28,22 @@ const addprofile = async(req,res,next)=>{
             personOfcontactPhoneNo:personOfcontactPhoneNo,
             personOfcontactEmail:personOfcontactEmail,
             views:views,
-            logo:`public/${req.files.logo[0].filename}`,
-            backgroundImage:`public/${req.files.backgroundImage[0].filename}`
+        }
+        if(req.files.logo){          // If Logo Is present 
+            toAdd = {
+                toAdd,
+                ...{
+                    logo:`public/${req.files.logo[0].filename}`
+                }
+            }
+        }
+        if(req.files.backgroundImage){                  // If Background image is Present
+            toAdd = {
+                toAdd,
+                ...{
+                    backgroundImage:`public/${req.files.backgroundImage[0].filename}`
+                }
+            }
         }
         await Organizer.findOneAndUpdate({organizationName:organizationName},toAdd); 
         const response = await Organizer.findOne({organizationName:organizationName});

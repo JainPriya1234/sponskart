@@ -6,7 +6,7 @@ const {authorization} = require('../middleware/authorization')
 
 
 // End Point
-// /creator
+// /brand
 
 // router.put('/update',fileupload.fields([
 //     {name:'logo'},

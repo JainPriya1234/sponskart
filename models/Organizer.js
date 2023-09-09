@@ -27,12 +27,12 @@ const organizerSchema = new mongoose.Schema({
    state:{
       type: String
    },
-   // city:{
-   //    type:String
-   // },
-   // country:{
-   //    type:String
-   // },
+   city:{
+      type:String
+   },
+   country:{
+      type:String
+   },
    // tagline:{
    //    type:String
    // },
@@ -45,16 +45,16 @@ const organizerSchema = new mongoose.Schema({
    // personOfcontactEmail:{
    //    type:String
    // },
-   // views:{
-   //    type:Number,
-   //    default:0
-   // },
-   // backgroundImage:{
-   //    type:String,
-   // },
-   // logo:{
-   //    type:String
-   // }
+   views:{
+      type:Number,
+      default:0
+   },
+   backgroundImage:{
+      type:String,
+   },
+   logo:{
+      type:String
+   }
 })
 
 module.exports = mongoose.model("Organizer",organizerSchema);
