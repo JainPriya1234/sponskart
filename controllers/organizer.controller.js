@@ -29,11 +29,13 @@ const addprofile = async(req,res,next)=>{
             personOfcontactEmail:personOfcontactEmail,
             views:views,
         }
+        
+        console.log(req.files.logo)
         if(req.files.logo){          // If Logo Is present 
-            toAdd.logo = `public/${req.files.logo[0].filename}`;
+            toAdd.logo = `public/${req.files.logo[0].originalname}`;
         }
         if(req.files.backgroundImage){                  // If Background image is Present
-            toAdd.backgroundImage = `public/${req.files.backgroundImage[0].filename}`;
+            toAdd.backgroundImage = `public/${req.files.backgroundImage[0].originalname}`;
         }
         console.log(toAdd)
         await Organizer.findOneAndUpdate({organizationName:organizationName},toAdd); 
