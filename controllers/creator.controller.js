@@ -26,20 +26,10 @@ const  addprofile = async(req,res,next)=>{
             views:views
         }
         if(req.files.logo){          // If Logo Is present 
-            toAdd = {
-                toAdd,
-                ...{
-                    logo:`public/${req.files.logo[0].filename}`
-                }
-            }
+            toAdd.logo = `public/${req.files.logo[0].filename}`;
         }
         if(req.files.backgroundImage){                  // If Background image is Present
-            toAdd = {
-                toAdd,
-                ...{
-                    backgroundImage:`public/${req.files.backgroundImage[0].filename}`
-                }
-            }
+            toAdd.backgroundImage = `public/${req.files.backgroundImage[0].filename}`;
         }
         await creator.findByIdAndUpdate(id,toAdd); 
         const result = await creator.findById(id);
