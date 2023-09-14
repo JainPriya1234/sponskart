@@ -3,6 +3,7 @@ const { createCustomError } = require("../error handler/customApiError");
 const { sendSuccessApiResponse } = require("../middleware/successApiResponse");
 const APIFeatures = require("../utils/APIfeatures");
 const creator = require("../models/creator");
+const { default: mongoose } = require("mongoose");
 
 const  addprofile = async(req,res,next)=>{
     try{

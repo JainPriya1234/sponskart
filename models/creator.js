@@ -28,7 +28,7 @@ const creatorSchema = new mongoose.Schema({
    },
    state:{
       type:String
-   }
+   },
    // location:{
    //    type:String
    // },
@@ -44,16 +44,16 @@ const creatorSchema = new mongoose.Schema({
 //    personOfcontactEmail:{
 //       type:String
 //    },
-//    views:{
-//       type:Number,
-//       default:0
-//    },
-//    backgroundImage:{
-//       type:String,
-//    },
-//    logo:{
-//       type:String
-//    }
+   views:{
+      type:Number,
+      default:0
+   },
+   backgroundImage:{
+      type:String,
+   },
+   logo:{
+      type:String
+   }
 })
 
 module.exports = mongoose.model("creator",creatorSchema);
