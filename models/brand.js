@@ -22,6 +22,33 @@ const brandprofileschema = new mongoose.Schema({
     },
     HolderName : {
         type:String
+    },
+    websiteLink :{
+        type:String
+    },
+    location:{
+        type:String
+    },
+    postfor:{
+        type:String
+    },
+    describe:{
+        type:String
+    },
+    miniFollower:{
+        type:Number
+    },
+    chooseLocation:{
+        type:String
+    },
+    want:{
+        type:String
+    },
+    platform:{
+        type:String
+    },
+    categories:{
+        type:String
     }
 })
 

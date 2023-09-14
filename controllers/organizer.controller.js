@@ -9,10 +9,11 @@ const Organizer = require("../models/Organizer");
 
 const addprofile = async(req,res,next)=>{
     try{
-        const {email,organizationName,followers, eventType, preferredGender,
+        const {id,email,organizationName,followers, eventType, preferredGender,
             platform, language,state,city,country,phonenumber,tagline,personOfcontact,
             personOfcontactPhoneNo,personOfcontactEmail,views } = req.body;
         let toAdd = {
+            id:id,
             email:email,
             organizationName:organizationName,
             followers:followers,
@@ -38,8 +39,8 @@ const addprofile = async(req,res,next)=>{
             toAdd.backgroundImage = `public/${req.files.backgroundImage[0].originalname}`;
         }
         console.log(toAdd)
-        await Organizer.findOneAndUpdate({organizationName:organizationName},toAdd); 
-        const response = await Organizer.findOne({organizationName:organizationName});
+        await Organizer.findByIdAndUpdate(id,toAdd); 
+        const response = await Organizer.findById(id);
         res.json(sendSuccessApiResponse(response));
     }
     catch(err){
