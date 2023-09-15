@@ -14,9 +14,8 @@ const {authorization} = require('../middleware/authorization')
 // ]),creator.addprofile);
  router.get('/get/:id',brand.getById);
  router.get('/getall',brand.getAll);
-
-
-
+ router.post('/add/post',brand.addPost);
+ 
 
 
 module.exports = router;

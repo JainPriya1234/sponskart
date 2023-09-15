@@ -5,6 +5,26 @@ const brandprofileschema = new mongoose.Schema({
         type: String,
         default: path.join('logo','Allow in .jpg')
     }],
+    backgroundImage:{
+        type:String,
+     },
+    facebook:{
+        type:String
+     },
+     insta:{
+        type:String
+     },
+     twitter:{
+        type:String
+     },
+     follower:{
+        type:Number
+     },
+     language:{
+        type:String
+     },
+     //backgroundimage , fb ,insta , 
+    //twitter,followers,brandtype,language,
     email: {
        type:String
     },
@@ -27,27 +47,6 @@ const brandprofileschema = new mongoose.Schema({
         type:String
     },
     location:{
-        type:String
-    },
-    postfor:{
-        type:String
-    },
-    describe:{
-        type:String
-    },
-    miniFollower:{
-        type:Number
-    },
-    chooseLocation:{
-        type:String
-    },
-    want:{
-        type:String
-    },
-    platform:{
-        type:String
-    },
-    categories:{
         type:String
     }
 })

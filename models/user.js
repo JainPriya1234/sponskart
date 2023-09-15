@@ -4,12 +4,6 @@ const jwt = require("jsonwebtoken");
 const { ObjectId } = require("mongodb");
 
 const userSchema = new mongoose.Schema({
-    // firstname:{
-    //     type: String,
-    // },
-    // lastname:{
-    //     type: String,
-    // },
     username:{
         type: String,
         unique:[true,'Username Already Exist']

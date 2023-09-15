@@ -3,6 +3,7 @@ const { createCustomError } = require("../error handler/customApiError");
 const { sendSuccessApiResponse } = require("../middleware/successApiResponse");
 const APIFeatures = require("../utils/APIfeatures");
 const Brand = require("../models/brand");
+const brandPost = require("../models/post");
 
 const getAll = async(req,res,next)=>{
     try{
@@ -59,27 +60,27 @@ const  addprofile = async(req,res,next)=>{
     }
 }
 
-const addPost= async()=>{
+const addPost= async(req,res,next)=>{
     try{
-        const {postfor,describe,miniFollower,} = req.body;
-        let toAdd = {
-            email:email,
-            brandName:brandName,
-            shortDesc:shortDesc,
-            longDesc:longDesc,
-            websiteLink:websiteLink,
-            location:location
-        }
-        if(req.files.logo){          // If Logo Is present 
-            toAdd.logo = `public/${req.files.logo[0].originalname}`;
-        }
+        const {postfor,describe,targetAudience,pricing,miniFollower,chooseLocation,payType,platform,categories} = req.body;
+        // if(req.files.logo){          // If Logo Is present 
+        //     toAdd.logo = `public/${req.files.logo[0].originalname}`;
+        // }
         // if(req.files.backgroundImage){                  // If Background image is Present
         //     toAdd.backgroundImage = `public/${req.files.backgroundImage[0].originalname}`;
         // }
-        await Brand.findByIdAndUpdate(id,toAdd); 
-        const result = await Brand.findById(id);
-        console.log(id)
-        res.json(sendSuccessApiResponse(result));
+        const post = await brandPost.create({
+            postfor:postfor,
+            describe:describe,
+            miniFollower:miniFollower,
+            chooseLocation:chooseLocation,
+            payType:payType,
+            platform:platform,
+            targetAudience:targetAudience,
+            pricing:pricing,
+            categories:categories
+        })
+        return res.json(sendSuccessApiResponse("Brandpost sucessfully created",200))
     }
     catch(err){
         return next(createCustomError(err,400));
@@ -89,5 +90,7 @@ const addPost= async()=>{
 module.exports = {
     getAll,
     getById,
-    addprofile
+    addprofile,
+    addPost
+
 };

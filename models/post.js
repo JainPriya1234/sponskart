@@ -21,6 +21,12 @@ const postSchema = new mongoose.Schema({
     },
     categories:{
         type:String
+    },
+    targetAudience:{
+        type:String
+    },
+    pricing:{
+        type:Number
     }
 })
 
