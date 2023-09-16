@@ -35,14 +35,24 @@ const getById = async(req,res,next)=>{
 
 const  addprofile = async(req,res,next)=>{
     try{
-        const {id,email,brandName,shortDesc,longDesc,websiteLink,location} = req.body;
+        const {id,facebook,username,phonenumber,instagram,linkedin ,brandType, HolderName,twitter,follower,language,email,brandName,shortDescription,longDescription,websiteLink,location} = req.body;
         let toAdd = {
             email:email,
             brandName:brandName,
-            shortDesc:shortDesc,
-            longDesc:longDesc,
+            shortDescription:shortDescription,
+            longDescription:longDescription,
             websiteLink:websiteLink,
-            location:location
+            location:location,
+            facebook:facebook,
+            instagram:instagram,
+            twitter:twitter,
+            follower:follower,
+            language:language,
+            HolderName:HolderName,
+            brandType:brandType,
+            linkedin:linkedin,
+            phonenumber:phonenumber,
+            username:username
         }
         if(req.files.logo){          // If Logo Is present 
             toAdd.logo = `public/${req.files.logo[0].originalname}`;

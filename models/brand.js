@@ -11,7 +11,10 @@ const brandprofileschema = new mongoose.Schema({
     facebook:{
         type:String
      },
-     insta:{
+     instagram:{
+        type:String
+     },
+     linkedin:{
         type:String
      },
      twitter:{
@@ -31,11 +34,14 @@ const brandprofileschema = new mongoose.Schema({
     brandName:{
         type: String,
     },
-    brandShortDesc:{
+    shortDescription:{
         type: String,
     },
-    brandLongDesc:{
+    longDescription:{
         type: String,
+    },
+    phonenumber:{
+        type:Number
     },
     pageHolder:{
         type: String,
@@ -47,6 +53,12 @@ const brandprofileschema = new mongoose.Schema({
         type:String
     },
     location:{
+        type:String
+    },
+    brandType:{
+        type:Array
+    },
+    username:{
         type:String
     }
 })
