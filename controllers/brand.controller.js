@@ -47,9 +47,9 @@ const  addprofile = async(req,res,next)=>{
         if(req.files.logo){          // If Logo Is present 
             toAdd.logo = `public/${req.files.logo[0].originalname}`;
         }
-        // if(req.files.backgroundImage){                  // If Background image is Present
-        //     toAdd.backgroundImage = `public/${req.files.backgroundImage[0].originalname}`;
-        // }
+        if(req.files.backgroundImage){                  // If Background image is Present
+            toAdd.backgroundImage = `public/${req.files.backgroundImage[0].originalname}`;
+        }
         await Brand.findByIdAndUpdate(id,toAdd); 
         const result = await Brand.findById(id);
         console.log(id)

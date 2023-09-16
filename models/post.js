@@ -17,10 +17,10 @@ const postSchema = new mongoose.Schema({
         type:String
     },
     platform:{
-        type:String
+        type:Array
     },
     categories:{
-        type:String
+        type:Array
     },
     targetAudience:{
         type:String
