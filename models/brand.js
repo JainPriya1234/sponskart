@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const path = require("path");
 const brandprofileschema = new mongoose.Schema({
-    Logo:[{
+    logo:[{
         type: String,
         default: path.join('logo','Allow in .jpg')
     }],
