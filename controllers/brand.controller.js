@@ -33,7 +33,7 @@ const getById = async(req,res,next)=>{
     }
 }
 
-const  addprofile = async(req,res,next)=>{
+const   addprofile = async(req,res,next)=>{
     try{
         const {id,facebook,username,phonenumber,instagram,linkedin ,brandType, HolderName,twitter,follower,language,email,brandName,shortDescription,longDescription,websiteLink,location} = req.body;
         let toAdd = {

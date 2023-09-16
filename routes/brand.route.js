@@ -15,7 +15,10 @@ const {authorization} = require('../middleware/authorization')
  router.get('/get/:id',brand.getById);
  router.get('/getall',brand.getAll);
  router.post('/add/post',brand.addPost);
- router.post('/update',brand.addprofile);
+ router.put('/update',fileupload.fields([
+    {name:'logo'},
+    {name:'backgroundImage'}
+]),brand.addprofile);
  
 
 
