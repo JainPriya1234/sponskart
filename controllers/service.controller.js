@@ -40,7 +40,22 @@ const contactUs =async(req,res,next)=>{
   }
 }
 
+const changeStatus = async(req,res,next)=>{
+     try{
+        const isUser = await user.findById(req.user.userId)
+        if( isUser.status == "online")
+            isUser.status="offline";
+         else
+            isUser.status="online";
+
+        await isUser.save();
+     }
+     catch(err){
+      return createCustomError(err,400);
+     }
+}
 module.exports = {
    searchservice,
-   contactUs
+   contactUs,
+   changeStatus
 };

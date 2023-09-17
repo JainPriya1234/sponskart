@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get('/search',servicecontroller.searchservice);
 router.post('/contactUs',servicecontroller.contactUs);
+router.post('/status',servicecontroller.changeStatus);
 
 
 module.exports = router;

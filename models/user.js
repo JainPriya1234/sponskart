@@ -46,6 +46,11 @@ const userSchema = new mongoose.Schema({
     type:{
         type:String,
         enum: ["creator","brand","organizer"]
+    },
+    status:{
+        type:String,
+        default:"online",
+        enum:["online","offline"]
     }
 },
 {
