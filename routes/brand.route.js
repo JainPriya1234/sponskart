@@ -20,6 +20,7 @@ const {authorization} = require('../middleware/authorization')
     {name:'backgroundImage'}
 ]),brand.addprofile);
  router.delete('/postdelete/:id',brand.deletePost);
+ router.get('/posts',brand.getPost);
 
 
 module.exports = router;

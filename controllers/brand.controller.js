@@ -103,6 +103,7 @@ const addPost= async(req,res,next)=>{
 const deletePost = async(req,res,next)=>{
     try{
         const id = req.params.id; 
+        // check if the post available or not else throw error (have to be done)
         await brandPost.findOneAndDelete(id);
         return res.json(sendSuccessApiResponse("Brandpost sucessfully deleted",200));
     }
@@ -111,21 +112,17 @@ const deletePost = async(req,res,next)=>{
     }
 }
 
-// const getPost = async(req,res,next)=>{
-//     try{
-//         console.log(12)
-//         const SearchString = ["brandName"];
-//         const query = new APIFeatures(Brand.find({followers:{$lt:req.query.followers || 1000000}}),req.query)
-//         .filter()
-//         .search(SearchString)
-//         const data = await query.query;
-//         const response = sendSuccessApiResponse(data);
-//         res.json(response);
-//     }
-//     catch(err){
-//         return next(createCustomError(err,400));
-//     }
-// }
+//get posts
+const getPost = async(req,res,next)=>{
+    try{
+        const get = await brandPost.find({ });
+        return res.json(sendSuccessApiResponse(get,200));
+   
+    }
+    catch(err){
+        return next(createCustomError(err,400));
+    }
+}
 
 
 module.exports = {
@@ -133,6 +130,7 @@ module.exports = {
     getById,
     addprofile,
     addPost,
-    deletePost
+    deletePost,
+    getPost
 
 };
