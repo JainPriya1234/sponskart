@@ -4,6 +4,8 @@ const { sendSuccessApiResponse } = require("../middleware/successApiResponse");
 const APIFeatures = require("../utils/APIfeatures");
 const Brand = require("../models/brand");
 const brandPost = require("../models/post");
+const user = require("../models/user");
+
 
 const getAll = async(req,res,next)=>{
     try{
@@ -97,10 +99,40 @@ const addPost= async(req,res,next)=>{
     }
 }
 
+//delete the post by id
+const deletePost = async(req,res,next)=>{
+    try{
+        const id = req.params.id; 
+        await brandPost.findOneAndDelete(id);
+        return res.json(sendSuccessApiResponse("Brandpost sucessfully deleted",200));
+    }
+    catch(err){
+        return next(createCustomError(err,400));
+    }
+}
+
+// const getPost = async(req,res,next)=>{
+//     try{
+//         console.log(12)
+//         const SearchString = ["brandName"];
+//         const query = new APIFeatures(Brand.find({followers:{$lt:req.query.followers || 1000000}}),req.query)
+//         .filter()
+//         .search(SearchString)
+//         const data = await query.query;
+//         const response = sendSuccessApiResponse(data);
+//         res.json(response);
+//     }
+//     catch(err){
+//         return next(createCustomError(err,400));
+//     }
+// }
+
+
 module.exports = {
     getAll,
     getById,
     addprofile,
-    addPost
+    addPost,
+    deletePost
 
 };
