@@ -1,6 +1,10 @@
 const mongoose = require("mongoose")
 const path = require("path");
 const postSchema = new mongoose.Schema({
+    brandId:{
+        type:mongoose.Types.ObjectId,
+        ref:"brand"
+    },
     postfor:{
         type:String
     },

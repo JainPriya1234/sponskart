@@ -6,7 +6,7 @@ const brandprofileschema = new mongoose.Schema({
     },
     backgroundImage:{
         type:String,
-     },
+    },
     facebook:{
         type:String
      },

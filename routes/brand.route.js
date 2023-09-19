@@ -19,8 +19,12 @@ const {authorization} = require('../middleware/authorization')
     {name:'logo'},
     {name:'backgroundImage'}
 ]),brand.addprofile);
- router.delete('/postdelete/:id',brand.deletePost);
- router.get('/posts',brand.getPost);
+
+// posts
+ router.delete('/deletepost',brand.deletePost);
+ router.get('/post',brand.getPost);
+ router.get('/post/all',brand.getAllPost);
+ router.put('/updatepost',brand.updatepost);
 
 
 module.exports = router;
