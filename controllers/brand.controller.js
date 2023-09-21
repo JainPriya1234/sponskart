@@ -74,7 +74,7 @@ const   addprofile = async(req,res,next)=>{
 
 const addPost= async(req,res,next)=>{
     try{
-        const {brandId,postfor,describe,targetAudience,pricing,miniFollower,chooseLocation,payType,platform,categories} = req.body;
+        const {date,brandId,postfor,describe,targetAudience,pricing,miniFollower,chooseLocation,payType,platform,categories} = req.body;
         // if(req.files.logo){          // If Logo Is present 
         //     toAdd.logo = `public/${req.files.logo[0].originalname}`;
         // }
@@ -82,6 +82,7 @@ const addPost= async(req,res,next)=>{
         //     toAdd.backgroundImage = `public/${req.files.backgroundImage[0].originalname}`;
         // }
         const post = await brandPost.create({
+            date:date,
             brandId:brandId,
             postfor:postfor,
             describe:describe,

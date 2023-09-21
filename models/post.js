@@ -8,6 +8,9 @@ const postSchema = new mongoose.Schema({
     postfor:{
         type:String
     },
+    date:{
+        type:String
+    },
     describe:{
         type:String
     },
