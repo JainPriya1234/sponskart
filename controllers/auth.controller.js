@@ -136,7 +136,7 @@ const forgot =async(req,res,next)=>{
         return next(createCustomError(message, 400));
     } 
     const resetToken = emailExists.generateJWT();
-    const resetURL = `${process.env.BASEURL}/reset-password?token=${resetToken}`;
+    const resetURL = `${process.env.BASEURL}/sign-in/reset-password?token=${resetToken}`;
     const result = await Email.sendEmail(email,resetURL);
     console.log(result);
     res.status(200).json(`Reset link has been sent to ${email}`)
