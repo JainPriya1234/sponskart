@@ -19,6 +19,7 @@ exports.sendEmail = (email,resetlink) =>{
         html:`<!DOCTYPE html>
         <html>
         <body>
+        <h1> Click on the link below to reset password </h1>
            ${resetlink}
         </body>
         </html>`   
