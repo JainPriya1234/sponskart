@@ -137,6 +137,7 @@ const forgot =async(req,res,next)=>{
     } 
     const resetToken = emailExists.generateJWT();
     const resetURL = `${process.env.BASEURL}?token=${resetToken}`;
+    console.log(resetURL);
     const result = await Email.sendEmail(email,resetURL);
     console.log(result);
     res.status(200).json(`Reset link has been sent to ${email}`)
@@ -152,7 +153,7 @@ const verifyResetPassword =async(req,res,next)=>{
     console.log(token);
     const payload = await jwt.verify(token,process.env.JWT_SECRET);
     console.log(payload);
-    const userExist = await user.findOne({_id : payload.userId})
+    const userExist = await User.findOne({_id : payload.userId})
     console.log(userExist);
     if (!userExist)
     {
